@@ -1,0 +1,27 @@
+<!-- Local rules: SOC Automation Lab (Wazuh + Shuffle + TheHive) -->
+<!-- Location: /var/ossec/etc/rules/local_rules.xml -->
+<!-- Restart after editing: sudo systemctl restart wazuh-manager -->
+
+<group name="local,sysmon,credential_access,">
+
+  <!-- Rule 100002: Mimikatz execution by process image name (deployed in the lab) -->
+  <rule id="100002" level="15">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)mimikatz\.exe</field>
+    <description>mimikatz execution detected - credential dumping tool</description>
+    <mitre>
+      <id>T1003</id>
+    </mitre>
+  </rule>
+
+  <!-- Rule 100003: hardening - catches a renamed binary via the PE OriginalFileName -->
+  <rule id="100003" level="15">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)mimikatz\.exe</field>
+    <description>mimikatz detected via OriginalFileName (renamed binary) - credential dumping tool</description>
+    <mitre>
+      <id>T1003</id>
+    </mitre>
+  </rule>
+
+</group>

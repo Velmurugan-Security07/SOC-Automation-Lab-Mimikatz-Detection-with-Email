@@ -1,0 +1,18 @@
+# Secrets - never commit
+*.key
+*.pem
+.env
+*.env
+secrets*
+api_key*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Unredacted originals
+images/raw/
+originals/
